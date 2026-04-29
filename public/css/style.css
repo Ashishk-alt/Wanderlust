@@ -1,0 +1,220 @@
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    padding:1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container{
+    flex:1 !important;
+}
+/* navbar styling */
+.navbar{
+    height:5rem;
+    background-color: white;
+}
+
+.fa-compass{
+    font-size: 2rem;
+    color: #fe424d;
+}
+
+.nav-link{
+    color:#222222 !important;
+}
+
+/* footer styling */
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+.f-info-links, .f-info-socials, .f-info-brand{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.f-info-socials i{
+    font-size: 1.2 rem;
+    margin-right: 1rem;
+}
+
+.f-info{
+    height: 8rem;
+    background-color: #ebebeb;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-evenly;
+
+}
+
+/* card styling */
+.listing-card{
+    border: none !important;
+    margin-bottom: 2rem !important;
+
+}
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding: 0 !important;
+}
+.card-text p{
+    font-weight: 400 !important;
+}
+.listing-link{
+    text-decoration: none !important;
+}
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+/* new page */
+.add-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+/* edit page */
+.edit-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* show page */
+.show-img{
+    height: 30vh;
+}
+
+.btns{
+    display: flex;
+}
+.show-card{
+    padding-left:0;
+    padding-right:0;
+}
+
+/* MAP */
+#map{
+    height: 400px;
+    width: 90%;
+}
+@media(min-width:0px) and (max-width:400px){
+    #map{
+        height:250px !important;
+        width:300px !important;
+    }
+}
+.search-btn {
+    background-color: #fe424d;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0 1rem 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-btn:hover {
+    background-color: #fe424d;
+    color: white;
+}
+
+.search-btn i {
+    display: inline;
+    margin-right: 0.5rem;
+}
+
+.search-inp {
+    border-radius: 25px;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+}
+
+/* Chat icon */
+#chat-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: black;
+  color: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+/* Chatbox (hidden by default) */
+#chatbot {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 260px;
+  height: 320px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+
+  display: none; /* 👈 IMPORTANT */
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10000;
+}
+
+/* Header */
+#chat-header {
+  background: black;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* Messages */
+#chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/* Input */
+#chat-input {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+#chat-input input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  outline: none;
+}
+
+#chat-input button {
+  background: black;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.listing-img {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}

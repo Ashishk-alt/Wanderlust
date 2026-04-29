@@ -1,0 +1,180 @@
+<% layout("/layouts/boilerplate") %>
+
+<script>
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const listing = <%- JSON.stringify(listing) %>;
+</script>
+
+<div class="row mt-3">
+
+    <div class="col-8 offset-3">
+        <h3><%= listing.title %></h3>
+    </div>
+
+    <div class="card col-6 offset-3 show-card listing-card">
+        
+        <!-- ✅ IMAGE FIX -->
+        <img 
+          src="<%= listing.image?.url || listing.image || 'https://via.placeholder.com/400' %>" 
+          class="card-img-top"
+          style="height:300px; object-fit:cover; border-radius:10px;"
+        >
+
+        <div class="card-body">
+
+            <p class="card-text">
+                Owned by 
+                <i>
+                    <%= listing.owner?.username || "Unknown" %>
+                </i>
+            </p>
+
+            <p class="card-text"><%= listing.description %></p>
+
+            <!-- ⭐ BASE PRICE -->
+            <p class="card-text">
+                ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+            </p>
+
+            <!-- ⭐ GUEST INFO -->
+            <p class="card-text">👥 Max Guests: <%= listing.maxGuests || 1 %></p>
+            <p class="card-text">💰 Extra Guest Charge: ₹<%= listing.extraGuestPrice || 0 %> / person</p>
+
+            <!-- ⭐ INPUT WITH LIMIT -->
+            <label class="mt-2">Select Guests:</label>
+            <input 
+                type="number" 
+                id="guests" 
+                class="form-control w-25" 
+                min="1" 
+                max="<%= (listing.maxGuests || 1) + 3 %>"
+                value="1"
+            >
+
+            <!-- ⭐ TOTAL PRICE -->
+            <p class="card-text mt-2">
+                <b id="totalPrice">Total Price: ₹<%= listing.price %></b>
+            </p>
+
+            <!-- ⭐ WARNING -->
+            <p id="extraMsg" style="color:red;"></p>
+
+            <p class="card-text"><%= listing.location %></p>
+            <p class="card-text"><%= listing.country %></p>
+        </div>
+    </div>
+
+    <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
+        <div class="btns">
+            <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
+
+            <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                <button class="btn btn-dark offset-5">Delete</button>
+            </form>
+        </div>
+    <% } %>
+
+    <!-- REVIEWS -->
+    <div class="col-8 offset-3 mb-3">
+        <hr />
+
+        <% if(currUser) { %>
+            <h4>Leave a Review</h4>
+
+            <form method="POST" action="/listings/<%= listing._id %>/reviews" class="needs-validation" novalidate>
+
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Rating</label>
+
+                    <fieldset class="starability-slot">
+                        <input type="radio" name="review[rating]" value="1" checked />
+                        <input type="radio" name="review[rating]" value="2" />
+                        <input type="radio" name="review[rating]" value="3" />
+                        <input type="radio" name="review[rating]" value="4" />
+                        <input type="radio" name="review[rating]" value="5" />
+                    </fieldset>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Comments</label>
+                    <textarea name="review[comment]" class="form-control" required></textarea>
+                </div>
+
+                <button class="btn btn-outline-dark">Submit</button>
+            </form>
+        <% } %>
+
+        <% if(listing.reviews?.length > 0) { %>
+            <hr />
+            <div class="row">
+                <p><b>All Reviews</b></p>
+
+                <% for(let review of listing.reviews) { %>
+                    <div class="card col-lg-5 ms-3 mb-3">
+                        <div class="card-body">
+                            <h5>@<%= review.author?.username || "User" %></h5>
+                            <p><%= review.comment %></p>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
+
+    </div>
+
+    <!-- MAP -->
+    <div class="col-8 offset-3 mb-3">
+        <h3>Where you'll be</h3>
+        <div id="map"></div>
+    </div>
+
+</div>
+
+<!-- ⭐ REAL-TIME PRICE SCRIPT -->
+
+<script>
+  const basePrice = Number("<%= listing.price %>") || 0;
+  const maxGuests = Number("<%= listing.maxGuests %>") || 1;
+  const extraPrice = Number("<%= listing.extraGuestPrice %>") || 0;
+
+  const guestInput = document.getElementById("guests");
+  const totalPriceEl = document.getElementById("totalPrice");
+  const extraMsg = document.getElementById("extraMsg");
+
+  const maxAllowed = maxGuests + 3;
+
+  function updatePrice() {
+    let guests = parseInt(guestInput.value) || 1;
+
+    // 🔒 HARD LIMIT
+    if (guests > maxAllowed) {
+      guests = maxAllowed;
+      guestInput.value = guests;
+      extraMsg.innerText = "🚫 Maximum allowed guests reached";
+      return;
+    }
+
+    let total = basePrice;
+
+    if (guests > maxGuests) {
+      let extraGuests = guests - maxGuests;
+      let extraCost = extraGuests * extraPrice;
+
+      total += extraCost;
+
+      extraMsg.innerText =
+        `⚠ Extra: ${extraGuests} × ₹${extraPrice} = ₹${extraCost}`;
+    } else {
+      extraMsg.innerText = "";
+    }
+
+    totalPriceEl.innerText =
+      "Total Price: ₹" + total.toLocaleString("en-IN");
+  }
+
+  guestInput.addEventListener("input", updatePrice);
+
+  updatePrice();
+</script>
+
+<script src="/js/map.js"></script>
