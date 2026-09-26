@@ -170,3 +170,29 @@ Wanderlust/
 ├── package.json
 ├── package-lock.json
 └── .gitignore
+
+⚙️ Installation & Setup
+1. Clone the repository
+git clone https://github.com/Ashishk-alt/Wanderlust.git
+2. Navigate into the project
+cd Wanderlust
+3. Install dependencies
+npm install
+4. Create a .env file
+
+Create a .env file in the root directory:
+
+ATLASDB_URL=your_mongodb_connection_string
+SECRET=your_session_secret
+CLOUD_NAME=your_cloudinary_cloud_name
+CLOUD_API_KEY=your_cloudinary_api_key
+CLOUD_API_SECRET=your_cloudinary_api_secret
+
+Use your own credentials and never commit the .env file to GitHub.
+
+5. Start the application
+node app.js
+
+The application will run locally on:
+
+http://localhost:3001
