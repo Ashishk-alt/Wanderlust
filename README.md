@@ -196,3 +196,27 @@ node app.js
 The application will run locally on:
 
 http://localhost:3001
+
+🔮 Future Improvements
+
+Some features that can be added in future versions include:
+
+Online payment integration
+Booking and reservation management
+Advanced property filtering
+Wishlist functionality
+Location-based search
+Map-based property discovery
+Email notifications
+Host and guest dashboards
+Improved recommendation system
+👨‍💻 Developer
+
+Ashish Kumar
+
+GitHub:
+https://github.com/Ashishk-alt
+
+📄 License
+
+This project is developed for educational and portfolio purposes.
