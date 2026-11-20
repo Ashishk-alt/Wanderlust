@@ -1,3 +1,4 @@
+
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
@@ -17,7 +18,7 @@ router.post("/", async (req, res) => {
         if (!apiKey) {
             console.error("OPENROUTER_API_KEY is missing.");
             return res.status(500).json({
-                reply: "AI configuration is missing. Please try again later."
+                reply: "AI configuration is missing."
             });
         }
 
@@ -25,10 +26,11 @@ router.post("/", async (req, res) => {
             "https://openrouter.ai/api/v1/chat/completions",
             {
                 model: "openai/gpt-5.4-mini",
+                max_tokens: 1000,
                 messages: [
                     {
                         role: "system",
-                        content: "You are Wanderlust AI, a helpful travel assistant. Answer questions about travel, destinations, hotels, tourism and general knowledge in a friendly and clear way."
+                        content: "You are Wanderlust AI, a helpful travel assistant. Answer questions about travel, destinations, hotels, tourism and general knowledge in a friendly and clear way. Keep answers concise and useful."
                     },
                     {
                         role: "user",
@@ -64,4 +66,6 @@ router.post("/", async (req, res) => {
         });
     }
 });
+
 module.exports = router;
+
